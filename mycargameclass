@@ -1,0 +1,197 @@
+//imports library to be able to use the functions for the program to complete its tasks
+import java.util.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+
+public class mycargameclass 
+{
+	
+	public static void main(String[] args)
+{
+		//loop control variable
+		boolean m = true; 
+		 
+		 //creates windows for both the highscore and the gameplay
+		 JFrame window = new JFrame();
+		 JFrame q = new JFrame();
+		 JPanel p = new JPanel();
+		 Racer r = new Racer();
+		 
+		 //adds textfield to display currentscore
+		 JTextField gamescore = new JTextField("CurrentScore: ");
+		 //adds textield to allow user to enter highscorename
+		 JTextField highscorename = new JTextField("");
+		 
+		 
+		 //creates label to show available slots to display highscore and name
+		 JLabel hsname = new JLabel("Please Enter You're Name: ");
+		 JLabel slot1name = new JLabel("None");
+		 JLabel slot2name = new JLabel ("None");
+		 JLabel slot3name = new JLabel ("None");
+		 JTextField slot1score = new JTextField("0");
+		 JTextField slot2score = new JTextField ("0");
+		 JTextField slot3score = new JTextField ("0");
+		 
+		 //add button ok to the highscore to allow user to complete entering their name
+		 JButton ok = new JButton("Ok");
+		
+		//allow customization of the panels
+					r.getPanel().setLayout(null);
+					p.setLayout(null);
+		 
+		 //setting location of the buttons
+		 r.getPanel().add(gamescore);
+			gamescore.setLocation(0, 5);
+				gamescore.setSize(225,25);
+		
+		
+		//set certain field to be editable and not editable 
+		highscorename.setEditable(true);
+		gamescore.setEditable(false);
+		slot1score.setEditable(false);
+		slot2score.setEditable(false);
+		slot3score.setEditable(false);
+		
+		
+		//customize race frame 
+		window.setTitle("Racer");
+        window.setSize(800, 600);
+        window.setContentPane(r.getPanel());
+        window.setVisible(true);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//customize highscore frame
+		q.setTitle("Highscore");
+		q.setLocation(800, 100);
+        q.setSize(500, 500);
+        q.setVisible(true);
+		q.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		q.setContentPane(p);
+		
+		
+		//poisitioning the ok button
+		p.add(ok);
+		ok.setLocation(300, 350);
+		ok.setSize(80, 20);
+		
+		//add actionlistener to ok button to allow it to perfrom functions when clicked
+		ok.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e)
+			{
+				
+				System.out.println("highscore");
+				String textfieldname = highscorename.getText();
+				
+				slot1name.setText(textfieldname);
+				//slot1score.setText(score);
+				
+			}
+		}
+	);
+		
+		
+		//setting positions for the labels
+		p.add(slot1score);
+		slot1score.setLocation(250, 100);
+		slot1score.setSize(150, 30);
+		
+		p.add(slot2score);
+		slot2score.setLocation(250, 150);
+		slot2score.setSize(150, 30);
+		
+		p.add(slot3score);
+		slot3score.setLocation(250, 200);
+		slot3score.setSize(150, 30);
+		
+		p.add(slot1name);
+		slot1name.setLocation(100, -150);
+		slot1name.setSize(400, 500);
+		
+		p.add(slot2name);
+		slot2name.setLocation(100, -100);
+		slot2name.setSize(400, 500);
+		
+		p.add(slot3name);
+		slot3name.setLocation(100, -50);
+		slot3name.setSize(400, 500);
+		
+		p.add(hsname);
+		hsname.setLocation(50, 10);
+		hsname.setSize(500, 600);
+		
+		p.add(highscorename);
+		highscorename.setLocation(250, 300);
+		highscorename.setSize(100, 20);
+		
+		
+		//cutomising start and stop buttons
+		JButton st = new JButton("Start");
+		r.getPanel().add(st);
+		st.setLocation(0,500);
+		st.setSize(350, 30);
+		
+		
+		JButton sp = new JButton("Stop");
+		r.getPanel().add(sp);
+		sp.setLocation(390,500);
+		sp.setSize(350, 30);
+		
+		
+		//start button performs starting of the game
+		st.addActionListener(new ActionListener() 
+		{
+				public void actionPerformed(ActionEvent e)
+				{
+					System.out.println("Start");
+						r.start();
+						
+				}
+		}
+		);
+		
+		
+		//stop button perfroms stoping of the game
+		sp.addActionListener(new ActionListener()
+		{
+				public void actionPerformed(ActionEvent e) 
+				{
+					System.out.println("Stop");
+						r.stop();
+						
+						
+				}
+		}
+		);
+		
+		r.start();
+		
+		int score = 0;
+		int highscore;
+		
+		//never ending loop to make the game start and to track the score
+		while(m == true)
+		{
+			gamescore.setText("CurrentScore: " + r.getScore());
+				
+				r.update();
+				highscore = r.getScore();
+				
+			//if currentscore > previous score then it is then highscore
+			if(!r.isPlaying()){
+				//score = r.getScore();
+				if(score > highscore){
+					slot1score.setText("" + score);
+					slot2score.setText("" + highscore);
+			}
+			else{
+				slot1score.setText("" + highscore);
+			}
+			}
+		
+		
+		
+		
+	   }
+	}
+}
